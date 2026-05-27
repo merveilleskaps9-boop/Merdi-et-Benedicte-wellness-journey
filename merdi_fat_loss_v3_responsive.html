@@ -2170,12 +2170,12 @@ function calcDay(d){
     const MET_I_net=MET_I-1.0; // dépense nette (soustrait repos)
     kcalI=(MET_I_net*w*3.5/200)*iDur*SAFETY_FACTOR;
   }
-  const kcalG=(MET_GYM*w/60)*(parseInt(d.g)||0);
+  const kcalG=((MET_GYM-1.0)*w/60)*(parseInt(d.g)||0)*SAFETY_FACTOR;
   let kcalJR=0;
   if(d.jr && String(d.jr)!=='0'){
     const jrJumps=parseInt(String(d.jr).replace('jump_',''))||0;
     const sets=jrJumps/1000;
-    kcalJR=((10.0*w/60*10)+(2.0*w/60*8))*sets*SAFETY_FACTOR;
+    kcalJR=(((10.0-1.0)*w/60*10)+((2.0-1.0)*w/60*8))*sets*SAFETY_FACTOR;
   }
   const tdee=bmr+tef+kcalW+kcalI+kcalG+kcalJR;
   return{bmr,cal,pro,car,fat,fib,tef,kcalW,kcalI,kcalG,kcalJR,tdee};
@@ -2901,7 +2901,7 @@ function calcRealTDEE(){
     kcalI_real=(MET_R_net*w*3.5/200)*iDurR; // nette exacte
   }
   const MET_GYM_REAL=4.5;
-  const kcalG_real=(MET_GYM_REAL*w/60)*(parseInt(d.g)||0);
+  const kcalG_real=((MET_GYM_REAL-1.0)*w/60)*(parseInt(d.g)||0);
   let cal_today=0;
   (d.foods||[]).forEach(f=>{const item=userDB[f.id];if(item){const r=(item.u==='g'||item.u==='ml')?f.q/100:f.q;cal_today+=item.cal*r;}});
   const tef_real=0.10*cal_today;
