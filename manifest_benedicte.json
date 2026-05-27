@@ -5,9 +5,9 @@
   "start_url": "./benedicte_fat_loss_v3_responsive.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#1a0b12",
-  "theme_color": "#ff69b4",
+  "orientation": "any",
+  "background_color": "#0c0308",
+  "theme_color": "#0c0308",
   "lang": "fr",
   "icons": [
     {

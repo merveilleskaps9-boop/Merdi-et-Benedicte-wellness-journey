@@ -6,8 +6,8 @@
   <title>Merdi Fat Loss Journey v6</title>
   <style>@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Grotesk:wght@400;500;700&display=swap');*{margin:0;padding:0;box-sizing:border-box;}
 :root{--gold:#d4af37;--gold-light:#f0d060;--gold-dim:rgba(212,175,55,0.15);--gold-border:rgba(212,175,55,0.28);--cyber:#00e5ff;--cyber-dim:rgba(0,229,255,0.12);--cyber-border:rgba(0,229,255,0.25);--void:#05060a;--void2:#08090f;--glass-bg:rgba(6,7,12,0.55);--glass-border:rgba(212,175,55,0.2);--liquid:rgba(255,255,255,0.04);--liquid-border:rgba(255,255,255,0.09);--liquid-shine:rgba(255,255,255,0.12);--accent-cal:#d4af37;--accent-pro:#00e5ff;--accent-car:#7c6fff;--accent-fat:#00ffaa;--accent-fib:#a78bfa;--accent-warn:#ff9f1c;--text:#f0ead0;--text-soft:rgba(212,175,55,0.55);--text-gold:#d4af37;--card-bg:rgba(6,7,12,0.5);--meal1-color:#d4af37;--meal2-color:#00e5ff;--meal3-color:#a78bfa;--meal4-color:#00ffaa;--sauce-color:#ff9f1c;--snack-color:#7c6fff;}
-html{overflow-x:hidden;max-width:100%;}
-body{font-family:'Space Grotesk',sans-serif;background:#05060a;color:var(--text);padding:0;display:block;overflow-x:hidden;min-height:100vh;min-height:-webkit-fill-available;box-sizing:border-box;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);}
+html{overflow-x:hidden;max-width:100%;margin:0;padding:0;width:100%;}
+body{font-family:'Space Grotesk',sans-serif;background:#05060a;color:var(--text);padding:0;margin:0;display:block;overflow-x:hidden;min-height:100vh;min-height:-webkit-fill-available;box-sizing:border-box;}
 body::before{content:"";position:fixed;inset:-50%;background:radial-gradient(ellipse at 10% 20%,rgba(100,60,255,0.28) 0%,transparent 50%),radial-gradient(ellipse at 90% 80%,rgba(0,200,150,0.18) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(212,175,55,0.06) 0%,transparent 60%),radial-gradient(ellipse at 75% 15%,rgba(0,229,255,0.14) 0%,transparent 40%),radial-gradient(ellipse at 25% 85%,rgba(124,111,255,0.2) 0%,transparent 45%);filter:blur(70px);z-index:0;animation:cosmicDrift 20s infinite alternate ease-in-out;}
 @keyframes cosmicDrift{0%{transform:scale(1) translate(0,0) rotate(0deg);}33%{transform:scale(1.04) translate(1%,1.5%) rotate(0.5deg);}66%{transform:scale(1.02) translate(-0.5%,2%) rotate(-0.3deg);}100%{transform:scale(1.06) translate(2%,-1%) rotate(0.8deg);}}@keyframes goldPulse{0%,100%{opacity:0.6;text-shadow:0 0 20px rgba(212,175,55,0.4);}50%{opacity:1;text-shadow:0 0 40px rgba(212,175,55,0.8),0 0 80px rgba(212,175,55,0.3);}}@keyframes scanLine{0%{transform:translateY(-100%);opacity:0.6}100%{transform:translateY(200vh);opacity:0}}@keyframes liquidShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}@keyframes cornerGlow{0%,100%{opacity:0.4}50%{opacity:0.9}}
 .kapuku-wm{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:0.06;}
@@ -120,7 +120,7 @@ body.maint-mode .stat-card{border-color:rgba(52,199,89,0.12)!important;}
 
 /* ── iPhone portrait & petits phones (<430px) ── */
 @media(max-width:429px){
-body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);overflow-x:hidden;}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;margin:0;overflow-x:hidden;}
 .app-wrapper{width:100%;max-width:100%;display:flex;flex-direction:column;gap:0.75rem;box-sizing:border-box;}
 .col-left{width:100%;}
 .panel{padding:0.7rem;border-radius:1rem;}
@@ -147,7 +147,7 @@ body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-i
 
 /* ── iPhone paysage & phones moyens (430-767px) ── */
 @media(min-width:430px) and (max-width:767px){
-body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);overflow-x:hidden;}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;margin:0;overflow-x:hidden;}
 .app-wrapper{width:100%;max-width:100%;display:flex;flex-direction:column;gap:0.85rem;box-sizing:border-box;}
 .col-left{width:100%;}
 .panel{padding:0.85rem;border-radius:1.1rem;}
@@ -186,7 +186,7 @@ body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;overflow-x
 
 /* ── iPad paysage & petits laptops (1024-1179px) ── */
 @media(min-width:1024px) and (max-width:1179px){
-body{padding:calc(0.5rem + env(safe-area-inset-top)) calc(0.5rem + env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom)) calc(0.5rem + env(safe-area-inset-left));overflow-x:hidden;}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;margin:0;overflow-x:hidden;}
 .app-wrapper{display:grid;grid-template-columns:280px 1fr;column-gap:0.9rem;align-items:start;width:100%;max-width:100%;margin:0 auto;box-sizing:border-box;}
 .app-wrapper>.col-left{grid-column:1;align-self:start;}
 .app-wrapper>.col-left>.panel{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,229,255,0.3) transparent;}
@@ -198,7 +198,7 @@ body{padding:calc(0.5rem + env(safe-area-inset-top)) calc(0.5rem + env(safe-area
 
 /* ── Laptop standard (1180-1399px) ── */
 @media(min-width:1180px) and (max-width:1399px){
-body{padding:calc(0.75rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-inset-right)) calc(0.75rem + env(safe-area-inset-bottom)) calc(1rem + env(safe-area-inset-left));overflow-x:hidden;}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;margin:0;overflow-x:hidden;}
 .app-wrapper{display:grid;grid-template-columns:320px 1fr;column-gap:1rem;align-items:start;width:100%;max-width:100%;box-sizing:border-box;}
 .app-wrapper>.col-left{grid-column:1;align-self:start;}
 .app-wrapper>.col-left>.panel{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,229,255,0.3) transparent;}
@@ -210,7 +210,7 @@ body{padding:calc(0.75rem + env(safe-area-inset-top)) calc(1rem + env(safe-area-
 
 /* ── Desktop (1400-1799px) ── */
 @media(min-width:1400px) and (max-width:1799px){
-body{padding:calc(1rem + env(safe-area-inset-top)) calc(2rem + env(safe-area-inset-right)) calc(1rem + env(safe-area-inset-bottom)) calc(2rem + env(safe-area-inset-left));overflow-x:hidden;}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;margin:0;overflow-x:hidden;}
 .app-wrapper{display:grid;grid-template-columns:360px 1fr;column-gap:1.2rem;align-items:start;width:100%;max-width:100%;box-sizing:border-box;}
 .app-wrapper>.col-left{grid-column:1;align-self:start;}
 .app-wrapper>.col-left>.panel{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,229,255,0.3) transparent;}
@@ -222,7 +222,7 @@ body{padding:calc(1rem + env(safe-area-inset-top)) calc(2rem + env(safe-area-ins
 
 /* ── Grand écran (1800px+) ── */
 @media(min-width:1800px){
-body{padding:calc(1rem + env(safe-area-inset-top)) calc(3rem + env(safe-area-inset-right)) calc(1rem + env(safe-area-inset-bottom)) calc(3rem + env(safe-area-inset-left));overflow-x:hidden;}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;margin:0;overflow-x:hidden;}
 .app-wrapper{display:grid;grid-template-columns:400px 1fr;column-gap:1.5rem;align-items:start;width:100%;max-width:100%;box-sizing:border-box;}
 .app-wrapper>.col-left{grid-column:1;align-self:start;}
 .app-wrapper>.col-left>.panel{position:sticky;top:1rem;max-height:calc(100vh - 2rem);overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(0,229,255,0.3) transparent;}
@@ -231,7 +231,7 @@ body{padding:calc(1rem + env(safe-area-inset-top)) calc(3rem + env(safe-area-ins
 .app-wrapper>#mealsContainer,.app-wrapper>.streak-card,.app-wrapper>.chart-panel,.app-wrapper>.panel:not(:first-child),.app-wrapper>.app-credit{grid-column:2;}
 .app-wrapper.left-done>#mealsContainer,.app-wrapper.left-done>.streak-card,.app-wrapper.left-done>.chart-panel,.app-wrapper.left-done>.panel:not(:first-child),.app-wrapper.left-done>.app-credit{grid-column:1 / -1;}
 }
-body{padding:calc(1rem + env(safe-area-inset-top)) calc(3rem + env(safe-area-inset-right)) calc(1rem + env(safe-area-inset-bottom)) calc(3rem + env(safe-area-inset-left));overflow-x:hidden;}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0;margin:0;overflow-x:hidden;}
 }
 .macro-bar-wrap{margin-top:0.35rem;background:rgba(255,255,255,0.07);border-radius:4px;height:5px;overflow:hidden;}
 .macro-bar{height:100%;border-radius:4px;transition:width 0.5s ease;}
@@ -1173,8 +1173,8 @@ select:focus,input:focus,textarea:focus{
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="FatLoss Merdi">
-  <meta name="theme-color" content="#d4af37" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#d4af37">
+  <meta name="theme-color" content="#05060a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#05060a">
   <link rel="apple-touch-icon" href="icon_merdi_192.png" sizes="192x192">
   <link rel="apple-touch-icon" href="icon_merdi_512.png" sizes="512x512">
   <link rel="apple-touch-icon" href="icon_merdi_512.png">

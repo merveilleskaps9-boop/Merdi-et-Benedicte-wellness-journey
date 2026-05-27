@@ -5,9 +5,9 @@
   "start_url": "./merdi_fat_loss_v3_responsive.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#040508",
-  "theme_color": "#00e5ff",
+  "orientation": "any",
+  "background_color": "#05060a",
+  "theme_color": "#05060a",
   "lang": "fr",
   "icons": [
     {
