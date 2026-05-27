@@ -1,12 +1,9 @@
 // ═══════════════════════════════════════════════════════════
 // SERVICE WORKER — Merdi & Bénédicte Fat Loss Apps
-// Stratégie : Network First pour HTML/JS, Cache First pour icônes
+// Compatible GitHub Pages
 // ═══════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'fatLoss-v1';
-const CACHE_STATIC = 'fatLoss-static-v1';
-
-// Fichiers à mettre en cache immédiatement à l'installation
+const CACHE_NAME = 'fatLoss-v2';
 const STATIC_ASSETS = [
   './merdi_fat_loss_v3_responsive.html',
   './benedicte_fat_loss_v3_responsive.html',
@@ -18,93 +15,77 @@ const STATIC_ASSETS = [
   './manifest_benedicte.json'
 ];
 
-// ── Installation : mise en cache des assets statiques ──
+// Installation
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_STATIC).then(cache => {
-      return cache.addAll(STATIC_ASSETS).catch(err => {
-        console.warn('[SW] Certains assets non mis en cache :', err);
-      });
-    }).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(STATIC_ASSETS).catch(() => {}))
+      .then(() => self.skipWaiting())
   );
 });
 
-// ── Activation : supprimer les anciens caches ──
+// Activation
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME && key !== CACHE_STATIC)
-          .map(key => {
-            console.log('[SW] Suppression ancien cache :', key);
-            return caches.delete(key);
-          })
-      );
-    }).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(
+        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+      ))
+      .then(() => self.clients.claim())
   );
 });
 
-// ── Fetch : stratégie selon le type de ressource ──
+// Fetch : ne pas intercepter Firestore ni Google APIs
 self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
+  const url = event.request.url;
 
-  // Ne pas intercepter les requêtes Firestore (toujours réseau)
-  if (url.hostname.includes('firestore.googleapis.com') ||
-      url.hostname.includes('googleapis.com') ||
-      url.hostname.includes('fonts.gstatic.com') ||
-      url.hostname.includes('fonts.googleapis.com')) {
+  // Laisser passer toutes les requêtes réseau externes
+  if (url.includes('firestore.googleapis.com') ||
+      url.includes('googleapis.com') ||
+      url.includes('fonts.gstatic.com') ||
+      url.includes('fonts.googleapis.com') ||
+      url.includes('firebase') ||
+      !url.startsWith(self.location.origin)) {
     return;
   }
 
   // Icônes et manifests : Cache First
-  if (
-    event.request.url.match(/\.(png|ico|json)$/) &&
-    !event.request.url.includes('firestore')
-  ) {
+  if (url.match(/\.(png|ico|json)$/)) {
     event.respondWith(
-      caches.match(event.request).then(cached => {
-        return cached || fetch(event.request).then(response => {
-          if (response && response.status === 200) {
-            const clone = response.clone();
-            caches.open(CACHE_STATIC).then(cache => cache.put(event.request, clone));
-          }
-          return response;
-        });
-      })
+      caches.match(event.request)
+        .then(cached => cached || fetch(event.request)
+          .then(res => {
+            if (res && res.status === 200) {
+              caches.open(CACHE_NAME).then(c => c.put(event.request, res.clone()));
+            }
+            return res;
+          })
+        )
     );
     return;
   }
 
-  // Fichiers HTML : Network First, fallback cache
-  if (event.request.mode === 'navigate' || event.request.url.match(/\.html$/)) {
+  // HTML : Network First avec fallback cache
+  if (event.request.mode === 'navigate' || url.match(/\.html$/)) {
     event.respondWith(
       fetch(event.request)
-        .then(response => {
-          if (response && response.status === 200) {
-            const clone = response.clone();
-            caches.open(CACHE_STATIC).then(cache => cache.put(event.request, clone));
+        .then(res => {
+          if (res && res.status === 200) {
+            caches.open(CACHE_NAME).then(c => c.put(event.request, res.clone()));
           }
-          return response;
+          return res;
         })
-        .catch(() => {
-          return caches.match(event.request).then(cached => {
-            if (cached) return cached;
-            // Fallback générique si hors ligne
-            return new Response(
-              '<html><body style="font-family:sans-serif;text-align:center;padding:2rem;background:#040508;color:#fff"><h2>📵 Hors ligne</h2><p>Ouvre l\'app quand tu es connecté pour synchroniser tes données.</p></body></html>',
-              { headers: { 'Content-Type': 'text/html; charset=utf-8' } }
-            );
-          });
-        })
+        .catch(() => caches.match(event.request)
+          .then(cached => cached || new Response(
+            '<html><body style="font-family:sans-serif;text-align:center;padding:2rem;background:#050a14;color:#fff"><h2>📵 Hors ligne</h2><p>Reconnecte-toi pour synchroniser tes données.</p></body></html>',
+            { headers: { 'Content-Type': 'text/html; charset=utf-8' } }
+          ))
+        )
     );
     return;
   }
 });
 
-// ── Message : forcer la mise à jour depuis l'app ──
 self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
